@@ -1,30 +1,3 @@
-Skip to content
-Search or jump to…
-Pull requests
-Issues
-Marketplace
-Explore
- 
-@alexey2020altukhov 
-MichaelDeyev
-/
-interview
-Public
-Code
-Issues
-Pull requests
-Actions
-Projects
-Security
-Insights
-interview/README.md
-@MichaelDeyev
-MichaelDeyev add some stuff from interview 2
-Latest commit 7c685d7 29 days ago
- History
- 1 contributor
-631 lines (512 sloc)  55.7 KB
-
 # JAVA CORE
 ### 1. Методы Object.class
 `toString()`,
