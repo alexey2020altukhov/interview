@@ -1,4 +1,7 @@
-# JAVA CORE
+# Собеседование Junior+
+### 1. ODM
+?
+
 ### 1. Методы Object.class
 `toString()`,
 `equals()`,
