@@ -116,8 +116,8 @@ public class ProxyWebServer implements WebServer {
     private List<String> blockedSites = new ArrayList<>();
 
     public ProxyWebServer() { 
-		this.realServer = new RealWebServer(); 
-	}
+	this.realServer = new RealWebServer(); 
+    }
 
     public void blockWebsite(String url)  {
         this.blockedSites.add(url);
