@@ -124,7 +124,7 @@ public class ProxyWebServer implements WebServer {
     }
 
     @Override
-    public void makeRequest(String) {
+    public void makeRequest(String url) {
         if(!blockedSites.contains(url)) {
             this.realServer.makeRequest(url);
         }
