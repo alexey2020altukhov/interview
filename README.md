@@ -82,6 +82,44 @@ class Singleton {
 	}
 }
 ```
+**Simple Factory** - предоставляет объект для создания других объектов, не раскрывая при этом логику.
+```
+public interface Door
+{
+    public float getWidth();
+
+    public float getHeight();
+}
+
+public class WoodenDoor implements Door {
+
+    private float width;
+    private float height;
+
+    public WoodenDoor(float width, float height) {
+        this.width = width;
+        this.height = height;
+    }
+
+    public float getWidth() {
+        return this.width;
+    }
+
+    public float getHeight() {
+        return this.height;
+    }
+}
+
+public class DoorFactory
+{
+    public static Door makeDoor(float width, float height) {
+        return new WoodenDoor(width, height);
+    }
+}
+
+//Использование
+Door door = DoorFactory.makeDoor(100, 300);
+```
 
 **Factory Method** - делегирует процесс создания объектов классам-наследникам.  
 
