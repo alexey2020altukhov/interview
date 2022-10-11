@@ -254,6 +254,70 @@ public class ProxyWebServer implements WebServer {
 **Composite** - работает с базовыми и составными объектами единым образом.  
 
 **Decorator** - динамически добавляет новую функциональность некоторому объекту, сохраняя его интерфейс.
+```
+//Интерфейс авто
+public interface Car {
+    public int getSpeed();
+    public int getBaggageWeight();
+}
+
+//Обычный автомобиль
+public class SimpleCar implements Car {
+    private int speed = 50;
+    private int baggageWeight = 100;
+
+    @Override
+    public int getSpeed() {
+        return this.speed;
+    }
+
+    @Override
+    public int getBaggageWeight() {
+        return this.baggageWeight;
+    }
+}
+
+//Делаем из простого автомобиля гоночный
+public class SportCar implements Car {
+    private Car car;
+    public SportCar(Car car){
+        this.car = car;
+    }
+
+    @Override
+    public int getSpeed() {
+        return this.car.getSpeed() + 50;
+    }
+
+    @Override
+    public int getBaggageWeight() {
+        return this.car.getBaggageWeight();
+    }
+}
+
+//Делаем из простого автомобиля грузовой
+public class Truck implements Car {
+    private Car car;
+    public Truck(Car car){
+        this.car = car;
+    }
+
+    @Override
+    public int getSpeed() {
+        return this.car.getSpeed();
+    }
+
+    @Override
+    public int getBaggageWeight() {
+        return this.car.getBaggageWeight() + 1000;
+    }
+}
+
+//Использование
+Car simpleCar = new SimpleCar();
+Car sportCar = new SportCar(simpleCar);
+Car truck = new Truck(simpleCar);
+```
 
 **Bridge** - разделяет абстракцию от интерфейса, позволяя им меняться независимо.  
 
