@@ -531,7 +531,7 @@ public void setDependencyC(DependencyC dependencyC) {
 }
 ```
 
-**Способы создать Bean**  
+**Способы создать Bean:**  
 - Через XML.
 ```
 <beans>
@@ -556,3 +556,5 @@ public void setDependencyC(DependencyC dependencyC) {
 ```
 - Через java-код.
 - Через аннотации @Component - вешается над классом, говоря спрингу, что от данного класса нужно создать бин. @Bean - вешается над методом, возвращаемое значение которого будет являться бином. Используется в классах помеченных @Configuration.
+
+## ?. JVM, JDK, JRE
