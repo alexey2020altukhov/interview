@@ -567,3 +567,32 @@ public void setDependencyC(DependencyC dependencyC) {
 **JRE (Java Runtime Environment)** - это минимальная реализация виртуальной машины, необходимая для исполнения Java приложений. Состоит из виртуальной машины и библиотек Java классов.
 
 **JDK (Java Development Kit)** - это комплект разработчика приложений на языке Java, включающий в себя компилятор, стандартные библиотеки классов Java, примеры, документацию, различные утилиты и исполнительную систему JRE. 
+
+## ?. Аннотации
+**Аннотации** - это форма метаданных. Они предоставляют информацию о программе, при том сами частью программы не являются.
+```
+//Создание аннотации
+@interface ClassPreamble {
+    String author();
+    String date(); 
+    int currentRevision() default 1; 
+    String lastModified() default "N/A";
+    String lastModifiedBy() default "N/A"; 
+    // Можно использовать массив
+    String[] reviewers(); 
+ }
+ 
+ //Использование
+ @ClassPreamble ( 
+    author = "John Doe", 
+    date = "3/17/2002", 
+    currentRevision = 6, 
+    lastModified = "4/12/2004", 
+    lastModifiedBy = "Jane Doe", 
+    reviewers = {"Alice", "Bob", "Cindy"} 
+) 
+public class MyClass {
+...
+...
+} 
+```
