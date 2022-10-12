@@ -531,3 +531,28 @@ public void setDependencyC(DependencyC dependencyC) {
 }
 ```
 
+**Способы создать Bean**  
+- Через XML.
+```
+<beans>
+   <!-- A simple bean definition -->
+   <bean id = "fromBeanMessage" class = "com.example.Message">
+       <property name="message" value="This is message from simple bean"/>
+      <!-- collaborators and configuration for this bean go here -->
+   </bean>
+   <!-- A bean definition with lazy init set on -->
+   <bean id = "lazy" class = "com.example.Lazy" lazy-init = "true">
+      <!-- collaborators and configuration for this bean go here -->
+   </bean>
+   <!-- A bean definition with initialization method -->
+   <bean id = "init" class = "com.example.Message" init-method = "getMessage">
+      <!-- collaborators and configuration for this bean go here -->
+   </bean>
+   <!-- A bean definition with destruction method -->
+   <bean id = "destroyBean" class = "com.example.Message" destroy-method = "getMessage">
+      <!-- collaborators and configuration for this bean go here -->
+   </bean>
+</beans>
+```
+- Через java-код.
+- Через аннотации @Component - вешается над классом, говоря спрингу, что от данного класса нужно создать бин. @Bean - вешается над методом, возвращаемое значение которого будет являться бином. Используется в классах помеченных @Configuration.
