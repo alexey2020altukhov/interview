@@ -472,3 +472,62 @@ git pull
 ```
 git fetch
 ```
+!rebase дописать! похоже на merge
+
+## ?. Spring
+По сути **Spring Framework** представляет собой просто контейнер внедрения зависимостей, с несколькими удобными слоями (доступ к базе данных, прокси, аспектно-ориентированное программирование, RPC, веб-инфраструктура MVC). Это все позволяет быстрее и удобнее создавать Java-приложения.
+
+Ключевая особенность приложения, написанного на Spring, состоит в том что большую часть объектов создаем не мы, а Spring. Мы лишь конфигурируем классы (с помощью аннотаций либо в конфигурационном XML), чтобы «объяснить» фреймворку Spring, какие именно объекты он должен создать за нас, и полями каких объектов их сделать. Это и называется **инверсией зависимостей**. Объекты, которые создаются контейнером и находятся под его управлением, называются **бинами.**
+
+**Области видимости (scope) бинов:**
+- Singleton (по умолчанию). Бин с данным именем создаётся 1 раз в Spring Application Context и каждый раз при вызове getBean() вызывается тот самый бин. Используется, когда у бина нет изменяемых состояний (stateless)
+- Prototype. При вызове getBean() каждый раз будет создаваться новый бин в Spring Application Context. Используется, когда у бина есть изменяемые состояния (statefull)
+- Request. Создаётся один экземпляр бина на каждый HTTP запрос. Касается исключительно ApplicationContext.
+- Session. Создаётся один экземпляр бина на каждую HTTP сессию. Касается исключительно ApplicationContext.
+- Global-session. Создаётся один экземпляр бина на каждую глобальную HTTP сессию. Используется только с портлетами. Касается исключительно ApplicationContext.
+
+**Способы внедрения бинов:**
+- Через конструктор. Преимущество: данный способ будет внедрять зависимости и БЕЗ Spring (если вдруг захотел поменять DI фреймворк).
+```
+private DependencyA dependencyA;
+private DependencyB dependencyB;
+private DependencyC dependencyC;
+
+@Autowired
+public DI(DependencyA dependencyA, DependencyB dependencyB, DependencyC dependencyC) {
+    this.dependencyA = dependencyA;
+    this.dependencyB = dependencyB;
+    this.dependencyC = dependencyC;
+}
+```
+- Через поле. Недостаток: Когда DI на поле, то Spring через рефлексию (у класса найдёт это поле и по нему найдет зависимость которую надо внедрить). Следовательно - более слабый перформанс.
+```@Autowired
+private DependencyA dependencyA;
+@Autowired
+private DependencyB dependencyB;
+@Autowired
+private DependencyC dependencyC;
+
+```
+- Через сеттер (устарело)
+```
+private DependencyA dependencyA;
+private DependencyB dependencyB;
+private DependencyC dependencyC;
+
+@Autowired
+public void setDependencyA(DependencyA dependencyA) {
+    this.dependencyA = dependencyA;
+}
+
+@Autowired
+public void setDependencyB(DependencyB dependencyB) {
+    this.dependencyB = dependencyB;
+}
+
+@Autowired
+public void setDependencyC(DependencyC dependencyC) {
+    this.dependencyC = dependencyC;
+}
+```
+
