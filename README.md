@@ -1140,4 +1140,27 @@ Spring Framework предоставляет два наиболее фундам
 ```
 var errorCode: Int?
 ```
+## Ошибка N+1
 
+Проблема N+1 это при fetch.Type.EAGER подгружается вся структура сущности + ее наследники (которых N штук). Каждая из дочерних сущностей подгружается отдельным запросом. Итого идут запросы на получение N (всех связанных элементов)+ 1(основной элемент).
+
+Подход Spring Data:  
+``@Fetch.Type.Lazy``
+
+User one2many Role:  
+
+```
+public interface UserRepository extends CrudRepository<User, Long> {
+// Проблема
+    List<User> findAllBy(); // происходит проблема N+1
+
+// Решение 1
+    @Query("SELECT p FROM User p LEFT JOIN FETCH p.roles")  
+    List<User> findWithoutNPlusOne(); // используя LEFT JOIN, мы решаем проблему N + 1
+
+// Решение 2
+    @EntityGraph(attributePaths = {"roles"})                
+    List<User> findAll(); //используя attributePaths, Spring Data JPA позволяет избежать проблемы N + 1
+
+}
+```
