@@ -349,6 +349,89 @@ Car truck = new Truck(simpleCar);
 
 **Chain of responsibility** - пропускает некоторый запрос через набор обработчиков событий, до тех пор пока запрос не будет обработан.
 
+## ?. Паттерны MCA
+**Chain of Responsibility** - позволяет передавать запросы последовательно по цепочке обработчиков. Каждый последующий обработчик решает, может ли он обработать запрос сам и стоит ли передавать запрос дальше по цепи.
+```
+public abstract class AuthenticationProcessor {
+
+    public AuthenticationProcessor nextProcessor;
+
+    public abstract boolean isAuthorize (AuthenticationProvider authProvider);
+}
+
+public class OAuthProcessor extends AuthenticationProcessor {
+
+    public OAuthProcessor(AuthenticationProcessor nextProcessor) {
+        super(nextProcessor);
+    }
+
+    @Override
+    public boolean isAuthorized(AuthenticationProvider authProvider) {
+        if (authProvider instanceof OAuthTokenProvider) {
+            return true;
+        } else if (nextProcessor != null) {
+            return nextProcessor.isAuthorized(authProvider);
+        }
+        
+        return false;
+    }
+}
+
+public class UsernamePasswordProcessor extends AuthenticationProcessor {
+
+    public UsernamePasswordProcessor(AuthenticationProcessor nextProcessor) {
+        super(nextProcessor);
+    }
+
+    @Override
+    public boolean isAuthorized(AuthenticationProvider authProvider) {
+        if (authProvider instanceof UsernamePasswordProvider) {
+            return true;
+        } else if (nextProcessor != null) {
+            return nextProcessor.isAuthorized(authProvider);
+        }
+    return false;
+    }
+}
+
+public class ChainOfResponsibilityTest {
+
+    private static AuthenticationProcessor getChainOfAuthProcessor() {
+        AuthenticationProcessor oAuthProcessor = new OAuthProcessor(null);
+        return new UsernamePasswordProcessor(oAuthProcessor);
+    }
+
+    @Test
+    public void givenOAuthProvider_whenCheckingAuthorized_thenSuccess() {
+        AuthenticationProcessor authProcessorChain = getChainOfAuthProcessor();
+        assertTrue(authProcessorChain.isAuthorized(new OAuthTokenProvider()));
+    }
+
+    @Test
+    public void givenSamlProvider_whenCheckingAuthorized_thenSuccess() {
+        AuthenticationProcessor authProcessorChain = getChainOfAuthProcessor();
+ 
+        assertFalse(authProcessorChain.isAuthorized(new SamlTokenProvider()));
+    }
+}
+```
+**Saga** - предоставляет механизм, который позволяет обеспечить согласованность данных в микросервисной архитектуре без применения распределенных транзакций.
+
+Сага представляет собой набор локальных транзакций. Каждая локальная транзакция обновляет базу данных и публикует сообщение или событие, инициируя следующую локальную транзакцию в саге. Если транзакция завершилась неудачей, например, из-за нарушения бизнес правил, тогда сага запускает компенсирующие транзакции, которые откатывают изменения, сделанные предшествующими локальными транзакциями.
+
+Типы транзакций в саге:
+
+- Компенсирующая — отменяет изменение, сделанное локальной транзакцией.
+- Компенсируемая — это транзакция, которую необходимо компенсировать (отменить) в случае, если последующие транзакции завершаются неудачей.
+- Поворотная — транзакция, опеределяющая успешность всей саги. Если она выполняется успешно, то сага гарантированно дойдет до конца.
+- Повторяемая — идет после поворотной и гарантированно завершается успехом.
+
+Существует два способа координации саг:  
+- Хореография (Choreography) — каждая транзакция публикует события, которые запускают транзакции в других сервисах.
+- Оркестровка (Orchestration) — оркестратор говорит участникам, какие транзакции должны быть запущены.
+
+**Transactional Outbox** - обеспечивает сохранение сообщений в хранилище данных (как правило, в таблице outbox в базе данных), прежде чем они будут в конечном итоге переданы в брокер сообщений. Если бизнес-объект и соответствующие сообщения сохраняются в рамках одной транзакции базы данных, это гарантирует, что данные не будут потеряны. Либо будет зафиксировано все, либо при возникновении ошибки произойдет полный откат.
+
 ## ?. Базовые антипаттерны
 **1. God object (божественный объект)** - антипаттерн, который описывает излишнюю концентрацию слишком большого количества разношерстных функций, хранения большого количества разнообразных данных (объект, вокруг которого вращается приложение).  
 
