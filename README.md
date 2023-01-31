@@ -329,6 +329,77 @@ Car truck = new Truck(simpleCar);
 
 **Strategy** - описывает набор взаимозаменяемых алгоритмов с единым интерфейсом. 
 
+```
+public class Computer {
+    private ComputerStrategy strategy;
+
+    public Computer(ComputerStrategy strategy){
+        this.strategy = strategy;
+    }
+
+    public void setNewTask(ComputerStrategy strategy){
+        this.strategy = strategy;
+    }
+
+    public void runTask() {
+        this.strategy.execute();
+    }
+}
+
+// Computer может выполнять много разных алгоритмов-заданий
+// Они приходят к нему через контруктор либо через метод setNewTask. Вот примеры алгоритмов-заданий:
+
+public class Video implements ComputerStrategy {
+    private static final Logger LOGGER = Logger.getLogger(Video.class.getName());
+
+    @Override
+    public void execute() {
+        LOGGER.info("Video playing");
+    }
+}
+
+public class Music implements ComputerStrategy {
+    private static final Logger LOGGER = Logger.getLogger(Music.class.getName());
+
+    @Override
+    public void execute() {
+        LOGGER.info("Music playing");
+    }
+}
+
+// Каждый из этих алгоритмов реализует интерфейс ComputerStrategy:
+
+@FunctionalInterface
+public interface ComputerStrategy {
+    void execute();
+}
+
+public class App {
+    private static final Logger LOGGER = Logger.getLogger(App.class.getName());
+
+    public static void main(String[] args){
+        LOGGER.info("Switch on computer and play movie");
+        Computer computer = new Computer(new Video());
+        computer.runTask();
+
+        LOGGER.info("Find music");
+        computer.setNewTask(new Music());
+        computer.runTask();
+
+        // Java 8
+        Computer functionalComputer = new Computer(
+                () -> LOGGER.info("Write program")
+        );
+        functionalComputer.runTask();
+
+        functionalComputer = new Computer(
+                () -> LOGGER.info("Execute some code and get some output")
+        );
+        functionalComputer.runTask();
+    }
+}
+```
+
 **Iterator** - обеспечивает доступ к коллекциям объектов без раскрытия внутреннего устройства этих коллекций.  
 
 **Observer** - создает объект для отслеживания изменений в подсистеме и нотификации других подсистем.  
