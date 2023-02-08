@@ -3,7 +3,7 @@
 - ODM
 - Многопоточность
 
-## Типы данных
+## Простые типы данных
 
 ![image](https://user-images.githubusercontent.com/73114969/217656237-4d56634a-e3a9-4740-9361-67bd69c60fc6.png)
 
