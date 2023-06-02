@@ -1,7 +1,5 @@
 ### Собеседование Junior+
-## Дописать вопросы на темы:
-- ODM
-- Классы-обёртки
+## Оглавление
 
 [Простые типы данных](#simple-data-types)  
 [ООП](#oop)  
@@ -46,6 +44,10 @@
 [Сериализация и десериализация](#serialization-deserialization)  
 [Многопоточность Java](#multithreading)  
 [Лямбда-выражения](#lambda-expressions)  
+
+## Дописать вопросы по темам
+- ODM
+- Классы-обёртки
 
 <a name="simple-data-types"/>  
 
