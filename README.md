@@ -14,7 +14,7 @@
 [Аннотации @Controller и @RestController](#controller-restcontroller)  
 [@Component, @Repository, @Service, @Controller](#component-repository-service-controller)  
 [Другие аннотации Spring](#other-spring-annotations)  
-[Spring Transactions](#spring-transactions)  
+[Транзации Spring](#spring-transactions)  
 [Spring контейнеры](#spring-containers)  
 [JVM, JDK, JRE](#jvm-jdk-jre)  
 [Аннотации](#annotations)  
