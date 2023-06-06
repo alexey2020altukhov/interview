@@ -44,6 +44,7 @@
 [Сериализация и десериализация](#serialization-deserialization)  
 [Многопоточность Java](#multithreading)  
 [Лямбда-выражения](#lambda-expressions)  
+[Решение заданий](#task-solutions)
 
 ## Дописать вопросы по темам
 - ODM
@@ -1733,7 +1734,7 @@ class Lazy <T> {
 
 <a name="lambda-expressions"/>
 
-### Лямбда-выражения
+## Лямбда-выражения
 
 Лямбда-выражение — это такая функция. По сути, это анонимный (без имени) класс или метод, который можно передавать в другие методы в качестве аргумента.
 
@@ -1758,5 +1759,171 @@ public class LambdaApp {
 }
 interface Operationable{
     int calculate(int x, int y);
+}
+```
+
+<a name="task-solutions"/>
+
+## Решение заданий
+
+## Задание 1
+Необходимо в классе B на месте ? поставить все возможные варианты, чтобы все методы были корректно переопределены.
+```
+public static class A {
+
+    public A methodA(A a) throws IOException {
+        return null;
+    }
+
+    public A[] methodArrayA(A[] a) throws IOException {
+        return null;
+    }
+
+    public List<A> methodArrayA(List<A> a) throws IOException {
+        return null;
+    }
+}
+
+public static class B extends A {
+
+    @Override
+    public ? methodA(? a) ? {
+        return null;
+    }
+
+    @Override
+    public ? methodArrayA(? a) ? {
+        return null;
+    }
+
+    @Override
+    public ? methodArrayA(? a) ? {
+        return null;
+    }
+}
+```
+Решение:
+```
+public static class B extends A {
+
+    @Override
+    public A/B methodA(A a) throws IOException {
+        return null;
+    }
+
+    @Override
+    public A[]/B[] methodArrayA(A[] a) throws FileNotFoundException {
+        return null;
+    }
+
+    @Override
+    public List<A> methodArrayA(List<A> a) {
+        return null;
+    }
+}
+```
+Сигнатура метода при его переопределении должна сохраняться. Для исключений разрешается сужение диапозона, а также полное отбрасывание конструкции throws. List является сложной структурой, поэтому его тип нельзя поменять на тип класса наследника.
+## Задание 2
+Необходимо вернуть map, которая подсчитывает количество повторений каждого элемента в list.
+```
+public static Map<Integer, Integer> countNumber(List<Integer> input) {
+    return ?;
+}
+
+public static void main(String[] args) {
+    final List<Integer> list = new ArrayList<>(List.of(1, 2, 4, 2, 1, 5, 8, 1));
+    list.add(null);
+    list.add(null);
+    System.out.println(countNumber(list));
+}
+```
+Решение:  
+```
+public static Map<Integer, Integer> countNumber(List<Integer> input) {
+    return input.stream().distinct()
+            .collect(Collectors.toMap(e -> e, e -> Collections.frequency(input, e)));
+}
+
+public static void main(String[] args) {
+    final List<Integer> list = new ArrayList<>(List.of(1, 2, 4, 2, 1, 5, 8, 1));
+    list.add(null);
+    list.add(null);
+    System.out.println(countNumber(list));
+}
+```
+Map разрешает хранение null элементов, а также использование null в качестве ключа. Hashcode для null будет равен 0.
+## Задание 3
+Что будет в результате выполнения функции main и почему?
+```
+static class Person {
+
+    private int num;
+    private String name;
+
+    public Person(int num, String name) {
+        this.num = num;
+        this.name = name;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if(this == o) return  true;
+        if(!(o instanceof Person)) return false;
+        Person person = (Person) o;
+        return num == person.num && Objects.equals(name, person.name);
+    }
+
+    @Override
+    public String toString() {
+        return "Person{" +
+                "num=" + num +
+                ", name='" + name + '\'' +
+                '}';
+    }
+}
+
+public static void main(String[] args) {
+    Set<Person> persons = new HashSet<>();
+
+    persons.add(new Person(1, "Ivan"));
+    persons.add(new Person(1, "Ivan"));
+    persons.add(new Person(2, "Igor"));
+    persons.add(new Person(3, "Vova"));
+
+    System.out.println(persons.size());
+}
+```
+Ответ:
+Будут добавлены все 4 элемента, т.к. у всех объектов будут разные хэшкоды. При добавлении элементов в set происходит сначала их сравнение по хэшам и если они разные - элемент добавляется.  В классе Person нарушен контракт equasl и hashcode. Переопределяя equals - переопределяй и hashcode.
+HashSet под капотом содержит Map. В Map массив односвязных списков - бакетов, размерностью 16. Когда количество непустых бакетов в map становится равным или больше n * k, где k - коэффициент, размер массива увеличивается в 2 раза и для каждого элемента вновь считается его ячейка для нового n.
+## Задание 4
+Необходимо вернуть массив уникальных чисел от 1 до size, значения в котором идут в случайном порядке.
+```
+public static void main(String[] args) {
+    final int[] ints = mixInts(1000000);
+}
+
+private static int[] mixInts(int size) {
+    
+}
+```
+Решение:
+```
+private static final Random random = new Random();
+
+public static void main(String[] args) {
+    final int[] ints = mixInts(1000000);
+}
+
+private static int[] mixInts(int size) {
+    List<Integer> numbers = new ArrayList<>(size);
+    for (int i = 1; i <= size; i++) {
+        numbers.add(i);
+    }
+    int[] mixInts = new int[size];
+    for (int i = 0; i < size; i++) {
+        mixInts[i] = numbers.remove(random.nextInt(numbers.size()));
+    }
+    return mixInts;
 }
 ```
