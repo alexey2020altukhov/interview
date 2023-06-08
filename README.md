@@ -1927,3 +1927,81 @@ private static int[] mixInts(int size) {
     return mixInts;
 }
 ```
+## Задание 5
+Что будет выведено в результате выполнения метода main? Какой конструктор класса B будет вызван при передаче объекта класса C?
+```
+public class Task {
+ 
+    public static class A {
+        static {
+            System.out.println("static A");
+        }
+ 
+        {
+            System.out.println("block A");
+        }
+ 
+        public A() {
+            System.out.println("construct A");
+        }
+    }
+ 
+    public static class B extends A {
+        static {
+            System.out.println("static B");
+        }
+ 
+        {
+            System.out.println("block B");
+        }
+ 
+        public B() {
+            System.out.println("construct B");
+        }
+ 
+        public B(A a) {
+            System.out.println("construct B(A)");
+        }
+ 
+        public B(B b) {
+            System.out.println("construct B(B)");
+        }
+    }
+ 
+    public static class C extends B {
+        static {
+            System.out.println("static C");
+        }
+ 
+        {
+            System.out.println("block C");
+        }
+ 
+        public C() {
+            System.out.println("construct C");
+        }
+    }
+ 
+    public static void main(String[] args) {
+        new B(new C());
+    }
+}
+```
+Ответ:
+```
+static A
+static B
+static C
+block A
+construct A
+block B
+construct B
+block C
+construct C
+block A
+construct A
+block B
+construct B(B)  
+```
+Пояснение: 
+Инициализация происходит всегда от класса родителя к классам наследникам. Сначала будут выполнены статические блоки. Инициализация обычных блоков происходит перед конструктором.
