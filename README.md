@@ -764,9 +764,9 @@ git fetch
 - Global-session. Создаётся один экземпляр бина на каждую глобальную HTTP сессию. Используется только с портлетами. Касается исключительно ApplicationContext.
 
 **Способы внедрения бинов:**
-- Через конструктор. Преимущество: отсутствие рефлексии, внедрение зависимостей будет работать даже при использовании другого контейнера (не Spring).
+- Через конструктор. Преимущество: отсутствие рефлексии, внедрение зависимостей будет работать даже при использовании другого контейнера (не Spring). 
 <details>
-  <summary></summary>
+  <summary>Пример</summary>
 
 ```
 private DependencyA dependencyA;
@@ -780,12 +780,12 @@ public DI(DependencyA dependencyA, DependencyB dependencyB, DependencyC dependen
     this.dependencyC = dependencyC;
 }
 ```
-</details>
 А можно просто воспользоваться аннотацией ``@RequiredArgsContructor``, повесив её над классом, и пометить необходимые поля как final.
+</details>
 
 - Через поле. Недостаток: Spring через рефлексию подтягивает это поле (у класса найдёт это поле и по нему найдет зависимость которую надо внедрить). Следовательно - более слабый перформанс. Преимуществом является то, что IDEA сразу подсвечивает нам какой бин внедрён (если бин не внедрён, IDEA об этом скажет).
 <details>
-  <summary></summary>
+  <summary>Пример</summary>
 
 ```@Autowired
 private DependencyA dependencyA;
@@ -799,7 +799,7 @@ private DependencyC dependencyC;
 
 - Через сеттер (устарело)
 <details>
-  <summary></summary>
+  <summary>Пример</summary>
 
 ```
 private DependencyA dependencyA;
