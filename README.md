@@ -576,8 +576,6 @@ public class ChainOfResponsibilityTest {
 
 **Visitor** - отделяет алгоритм от структуры, с которыми алгоритм работает.  
 
-**Chain of responsibility** - пропускает некоторый запрос через набор обработчиков событий, до тех пор пока запрос не будет обработан.
-
 <a name="mca-patterns"/>  
 
 ## Паттерны MCA
