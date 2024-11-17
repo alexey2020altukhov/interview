@@ -782,6 +782,7 @@ public DI(DependencyA dependencyA, DependencyB dependencyB, DependencyC dependen
 ```
 </details>
 А можно просто воспользоваться аннотацией ``@RequiredArgsContructor``, повесив её над классом, и пометить необходимые поля как final.
+
 - Через поле. Недостаток: Spring через рефлексию подтягивает это поле (у класса найдёт это поле и по нему найдет зависимость которую надо внедрить). Следовательно - более слабый перформанс. Преимуществом является то, что IDEA сразу подсвечивает нам какой бин внедрён (если бин не внедрён, IDEA об этом скажет).
 <details>
   <summary></summary>
@@ -795,6 +796,7 @@ private DependencyC dependencyC;
 
 ```
 </details>
+
 - Через сеттер (устарело)
 <details>
   <summary></summary>
