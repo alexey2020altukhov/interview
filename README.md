@@ -825,6 +825,9 @@ public void setDependencyC(DependencyC dependencyC) {
 
 **Способы создать Bean:**  
 - Через XML.
+<details>
+  <summary>Пример</summary>
+
 ```
 <beans>
    <!-- A simple bean definition -->
@@ -846,6 +849,8 @@ public void setDependencyC(DependencyC dependencyC) {
    </bean>
 </beans>
 ```
+</details>
+
 - Через аннотацию ``@Component`` - вешается над классом, говоря спрингу, что от данного класса нужно создать бин.
 - Через аннотацию ``@Bean`` - вешается над методом, возвращаемое значение которого будет являться бином. Используется в классах помеченных ``@Configuration``.
 
