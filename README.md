@@ -152,6 +152,9 @@ class Singleton {
 </details>
 
 **Simple Factory** - предоставляет объект для создания других объектов, не раскрывая при этом логику.
+<details>
+  <summary>Пример</summary>
+	
 ```
 public interface Door
 {
@@ -188,7 +191,8 @@ public class DoorFactory
 
 //Использование
 Door door = DoorFactory.makeDoor(100, 300);
-```
+```  
+</details>
 
 **Factory Method** - делегирует процесс создания объектов классам-наследникам.  
 
