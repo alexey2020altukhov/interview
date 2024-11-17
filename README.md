@@ -133,7 +133,7 @@ _Прим:_
 
 **Singleton** - обеспечиват существование в системе ровно одного экземпляра некоторого класса.  
 <details>
-  <summary><span style="color:red">Пример</span></summary>
+  <span style="color:red"><summary>Пример</summary></span>
 
   ```
 class Singleton {
