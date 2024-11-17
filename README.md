@@ -199,7 +199,10 @@ Door door = DoorFactory.makeDoor(100, 300);
 **Prototype** - создает новые объекты, копируя существующие.  
 
 **Builder** -  позволяет поэтапно создавать сложные объекты.  
-```
+<details>
+  <summary>Пример</summary>
+	
+  ```
 //Машина, которую хотим создать
 public final class Car {
     private final String name;
@@ -274,13 +277,18 @@ Car premiumCar = new Car.Builder(Brand.MERCEDES, "E200")
                 .build();
 
 ```
+</details>
+
 **Abstract Factory** - описывает сущность для создания целых семейств взаимосвязанных объектов.  
 
 **2. Структурные**  
 Эти паттерны решают проблемы эффективного построения связей между объектами.  
 
 **Proxy** - предоставляет объект, который контролирует доступ к другому объекту, перехватывая все вызовы (выполняет функцию контейнера).  
-```
+<details>
+  <summary>Пример</summary>
+	
+  ```
 //Интерфейс
 public interface WebServer {
 
@@ -319,15 +327,89 @@ public class ProxyWebServer implements WebServer {
     }
 }
 ```
+</details>
 
 **Adapter** - на основании некоторого класса создает необходимый клиенту интерфейс.  
+
+**Chain of Responsibility** - позволяет передавать запросы последовательно по цепочке обработчиков. Каждый последующий обработчик решает, может ли он обработать запрос сам и стоит ли передавать запрос дальше по цепи.
+<details>
+  <summary>Пример</summary>
+	
+  ```
+public abstract class AuthenticationProcessor {
+
+    public AuthenticationProcessor nextProcessor;
+
+    public abstract boolean isAuthorize (AuthenticationProvider authProvider);
+}
+
+public class OAuthProcessor extends AuthenticationProcessor {
+
+    public OAuthProcessor(AuthenticationProcessor nextProcessor) {
+        super(nextProcessor);
+    }
+
+    @Override
+    public boolean isAuthorized(AuthenticationProvider authProvider) {
+        if (authProvider instanceof OAuthTokenProvider) {
+            return true;
+        } else if (nextProcessor != null) {
+            return nextProcessor.isAuthorized(authProvider);
+        }
+        
+        return false;
+    }
+}
+
+public class UsernamePasswordProcessor extends AuthenticationProcessor {
+
+    public UsernamePasswordProcessor(AuthenticationProcessor nextProcessor) {
+        super(nextProcessor);
+    }
+
+    @Override
+    public boolean isAuthorized(AuthenticationProvider authProvider) {
+        if (authProvider instanceof UsernamePasswordProvider) {
+            return true;
+        } else if (nextProcessor != null) {
+            return nextProcessor.isAuthorized(authProvider);
+        }
+    return false;
+    }
+}
+
+public class ChainOfResponsibilityTest {
+
+    private static AuthenticationProcessor getChainOfAuthProcessor() {
+        AuthenticationProcessor oAuthProcessor = new OAuthProcessor(null);
+        return new UsernamePasswordProcessor(oAuthProcessor);
+    }
+
+    @Test
+    public void givenOAuthProvider_whenCheckingAuthorized_thenSuccess() {
+        AuthenticationProcessor authProcessorChain = getChainOfAuthProcessor();
+        assertTrue(authProcessorChain.isAuthorized(new OAuthTokenProvider()));
+    }
+
+    @Test
+    public void givenSamlProvider_whenCheckingAuthorized_thenSuccess() {
+        AuthenticationProcessor authProcessorChain = getChainOfAuthProcessor();
+ 
+        assertFalse(authProcessorChain.isAuthorized(new SamlTokenProvider()));
+    }
+}
+```
+</details>
 
 **Facade** - описывает унифицированный интерфейс для облегчения работы с набором подсистем.  
 
 **Composite** - работает с базовыми и составными объектами единым образом.  
 
 **Decorator** - динамически добавляет новую функциональность некоторому объекту, сохраняя его интерфейс.
-```
+<details>
+  <summary>Пример</summary>
+	
+  ```
 //Интерфейс авто
 public interface Car {
     public int getSpeed();
@@ -391,6 +473,7 @@ Car simpleCar = new SimpleCar();
 Car sportCar = new SportCar(simpleCar);
 Car truck = new Truck(simpleCar);
 ```
+</details>
 
 **Bridge** - разделяет абстракцию от интерфейса, позволяя им меняться независимо.  
 
@@ -400,8 +483,10 @@ Car truck = new Truck(simpleCar);
 Эти паттерны решают проблемы эффективного взаимодействия между объектами.
 
 **Strategy** - описывает набор взаимозаменяемых алгоритмов с единым интерфейсом. 
-
-```
+<details>
+  <summary>Пример</summary>
+	
+  ```
 public class Computer {
     private ComputerStrategy strategy;
 
@@ -471,6 +556,7 @@ public class App {
     }
 }
 ```
+</details>
 
 **Iterator** - обеспечивает доступ к коллекциям объектов без раскрытия внутреннего устройства этих коллекций.  
 
@@ -495,71 +581,6 @@ public class App {
 <a name="mca-patterns"/>  
 
 ## Паттерны MCA
-**Chain of Responsibility** - позволяет передавать запросы последовательно по цепочке обработчиков. Каждый последующий обработчик решает, может ли он обработать запрос сам и стоит ли передавать запрос дальше по цепи.
-```
-public abstract class AuthenticationProcessor {
-
-    public AuthenticationProcessor nextProcessor;
-
-    public abstract boolean isAuthorize (AuthenticationProvider authProvider);
-}
-
-public class OAuthProcessor extends AuthenticationProcessor {
-
-    public OAuthProcessor(AuthenticationProcessor nextProcessor) {
-        super(nextProcessor);
-    }
-
-    @Override
-    public boolean isAuthorized(AuthenticationProvider authProvider) {
-        if (authProvider instanceof OAuthTokenProvider) {
-            return true;
-        } else if (nextProcessor != null) {
-            return nextProcessor.isAuthorized(authProvider);
-        }
-        
-        return false;
-    }
-}
-
-public class UsernamePasswordProcessor extends AuthenticationProcessor {
-
-    public UsernamePasswordProcessor(AuthenticationProcessor nextProcessor) {
-        super(nextProcessor);
-    }
-
-    @Override
-    public boolean isAuthorized(AuthenticationProvider authProvider) {
-        if (authProvider instanceof UsernamePasswordProvider) {
-            return true;
-        } else if (nextProcessor != null) {
-            return nextProcessor.isAuthorized(authProvider);
-        }
-    return false;
-    }
-}
-
-public class ChainOfResponsibilityTest {
-
-    private static AuthenticationProcessor getChainOfAuthProcessor() {
-        AuthenticationProcessor oAuthProcessor = new OAuthProcessor(null);
-        return new UsernamePasswordProcessor(oAuthProcessor);
-    }
-
-    @Test
-    public void givenOAuthProvider_whenCheckingAuthorized_thenSuccess() {
-        AuthenticationProcessor authProcessorChain = getChainOfAuthProcessor();
-        assertTrue(authProcessorChain.isAuthorized(new OAuthTokenProvider()));
-    }
-
-    @Test
-    public void givenSamlProvider_whenCheckingAuthorized_thenSuccess() {
-        AuthenticationProcessor authProcessorChain = getChainOfAuthProcessor();
- 
-        assertFalse(authProcessorChain.isAuthorized(new SamlTokenProvider()));
-    }
-}
-```
 **Saga** - предоставляет механизм, который позволяет обеспечить согласованность данных в микросервисной архитектуре без применения распределенных транзакций.
 
 Сага представляет собой набор локальных транзакций. Каждая локальная транзакция обновляет базу данных и публикует сообщение или событие, инициируя следующую локальную транзакцию в саге. Если транзакция завершилась неудачей, например, из-за нарушения бизнес правил, тогда сага запускает компенсирующие транзакции, которые откатывают изменения, сделанные предшествующими локальными транзакциями.
