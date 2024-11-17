@@ -133,8 +133,9 @@ _Прим:_
 
 **Singleton** - обеспечиват существование в системе ровно одного экземпляра некоторого класса.  
 <details>
-  <summary>Показать пример</summary>
-```
+  <summary>Пример</summary>
+
+  ```
 class Singleton {
 
 	private Singleton instance;
@@ -149,6 +150,7 @@ class Singleton {
 }
 ```
 </details>
+
 **Simple Factory** - предоставляет объект для создания других объектов, не раскрывая при этом логику.
 ```
 public interface Door
