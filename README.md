@@ -949,7 +949,7 @@ Spring Framework предоставляет два наиболее фундам
 
 **BeanFactory** - самый простой контейнер, обеспечивающий базовую поддержку DI, основан на интерфейсе org.springframework.beans.factory.BeanFactory. Наиболее распространенным классом реализации является XmlBeanFactory.
 
-**ApplicationContext** - обертка, расположенная поверх BeanFactory, предоставляющая некоторые дополнительные возможности, например AOP, транзакции, безопасность, i18n, и т.п. ApplicationContext - это усовершенствованный контейнер, который расширяет функциональность BeanFactory в более ориентированном на фреймворк стиле. Чаще всего используются следующие реализации: ClassPathXmlApplicationContext, FileSystemXmlApplicationContext, WebXmlApplicationContext, AnnotationConfigWebApplicationContext и т.д.
+**ApplicationContext** - обертка поверх BeanFactory, предоставляющая некоторые дополнительные возможности, например AOP, транзакции, безопасность, i18n, и т.п. ApplicationContext - это усовершенствованный контейнер, который расширяет функциональность BeanFactory в более ориентированном на фреймворк стиле. Чаще всего используются следующие реализации: ClassPathXmlApplicationContext, FileSystemXmlApplicationContext, WebXmlApplicationContext, AnnotationConfigWebApplicationContext и т.д.
 
 <a name="bean-post-processor"/> 
 
