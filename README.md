@@ -17,6 +17,7 @@
 [Транзации Spring](#spring-transactions)  
 [Spring контейнеры](#spring-containers)  
 [BeanFactoryPostProcessor и BeanPostProcessor](#bean-post-processor)  
+[@PostConstruct и @PreDestroy](#post-construct-pre-destroy)  
 [JVM, JDK, JRE](#jvm-jdk-jre)  
 [Аннотации](#annotations)  
 [Абстрактный класс VS интерфейс](#abstract-class-vs-interface)  
@@ -988,6 +989,14 @@ public class MyBeanPostProcessor implements BeanPostProcessor {
 }
 ```
 </details>
+
+<a name="post-construct-pre-destroy"/> 
+
+## @PostConstruct и @PreDestroy
+**@PostConstruct** и **@PreDestroy** - аннотации, которые используются для выполнения действий до и после завершения жизненного цикла бина.
+
+**@PostConstruct** используется для аннотирования метода, который необходимо выполнить после создания бина, но до его использования.
+**@PreDestroy** используется для аннотирования метода, который необходимо выполнить перед уничтожением бина.
 
 <a name="jvm-jdk-jre"/> 
 
