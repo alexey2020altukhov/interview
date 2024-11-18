@@ -955,6 +955,7 @@ Spring Framework предоставляет два наиболее фундам
 
 <details>
   <summary>Показать код</summary>
+	
 ```
 public interface BeanFactoryPostProcessor {
 	public void postProcessBeanFactory(ConfigurableListableBeanFactory beanFactory);
@@ -973,17 +974,17 @@ BeanPostProcessor предоставляет два метода, которые
 ```
 public class MyBeanPostProcessor implements BeanPostProcessor {
 
-@Override
-public Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException {
-// Ваш код для изменения или настройки свойств бина перед его инициализацией
-return bean;
-}
+	@Override
+	public Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException {
+		// Ваш код для изменения или настройки свойств бина перед его инициализацией
+		return bean;
+	}
 
-@Override
-public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
-// Ваш код для изменения или настройки свойств бина после его инициализации
-return bean;
-}
+	@Override
+	public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
+		// Ваш код для изменения или настройки свойств бина после его инициализации
+		return bean;
+	}
 }
 ```
 </details>
