@@ -16,6 +16,7 @@
 [Другие аннотации Spring](#other-spring-annotations)  
 [Транзации Spring](#spring-transactions)  
 [Spring контейнеры](#spring-containers)  
+[BeanFactoryPostProcessor и BeanPostProcessor](#bean-post-processor)  
 [JVM, JDK, JRE](#jvm-jdk-jre)  
 [Аннотации](#annotations)  
 [Абстрактный класс VS интерфейс](#abstract-class-vs-interface)  
@@ -945,6 +946,47 @@ Spring Framework предоставляет два наиболее фундам
 **BeanFactory** - самый простой контейнер, обеспечивающий базовую поддержку DI, основан на интерфейсе org.springframework.beans.factory.BeanFactory. Наиболее распространенным классом реализации является XmlBeanFactory.
 
 **ApplicationContext** - обертка, расположенная поверх BeanFactory, предоставляющая некоторые дополнительные возможности, например AOP, транзакции, безопасность, i18n, и т.п. ApplicationContext - это усовершенствованный контейнер, который расширяет функциональность BeanFactory в более ориентированном на фреймворк стиле. Чаще всего используются следующие реализации: ClassPathXmlApplicationContext, FileSystemXmlApplicationContext, WebXmlApplicationContext, AnnotationConfigWebApplicationContext и т.д.
+
+<a name="bean-post-processor"/> 
+
+## BeanFactoryPostProcessor и BeanPostProcessor
+
+**BeanFactoryPostProcessor** позволяет настраивать определения bean-компонентов, а также работать с их конфигурационными метаданными ещё до фактического создания этих bean-компонентов. BeanFactoryPostProcessor создается и запускается перед BeanPostProcessor.
+
+<details>
+  <summary>Показать код</summary>
+```
+public interface BeanFactoryPostProcessor {
+	public void postProcessBeanFactory(ConfigurableListableBeanFactory beanFactory);
+}
+```
+</details>
+
+**BeanPostProcessor** - это интерфейс, который позволяет вмешиваться в процесс создания и настройки бинов. 
+BeanPostProcessor предоставляет два метода, которые можно реализовать:
+- postProcessBeforeInitialization: вызывается перед инициализацией бина, используется для изменения или настройки свойств бина перед его инициализацией.
+- postProcessAfterInitialization: вызывается после инициализацией бина, используется для изменения или настройки свойств бина после его инициализации.
+
+<details>
+  <summary>Показать код</summary>
+
+```
+public class MyBeanPostProcessor implements BeanPostProcessor {
+
+@Override
+public Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException {
+// Ваш код для изменения или настройки свойств бина перед его инициализацией
+return bean;
+}
+
+@Override
+public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
+// Ваш код для изменения или настройки свойств бина после его инициализации
+return bean;
+}
+}
+```
+</details>
 
 <a name="jvm-jdk-jre"/> 
 
